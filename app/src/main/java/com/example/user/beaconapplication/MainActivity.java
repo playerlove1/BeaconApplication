@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         ((BeaconApplication) this.getApplicationContext()).setMonitoringActivity(this);
+
     }
 
     @Override
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 TextView Text = (TextView)MainActivity.this
                         .findViewById(R.id.monitoringText);
-                Text.append(line+"\n");
+                Text.append(line + "\n");
             }
         });
     }

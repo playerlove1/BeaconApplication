@@ -27,6 +27,7 @@ public class patient extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         ((BeaconApplication) this.getApplicationContext()).setMonitoringActivity(this);
+        ((BeaconApplication) this.getApplicationContext()).setp(this);
     }
 
     @Override
@@ -37,8 +38,9 @@ public class patient extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((BeaconApplication) this.getApplicationContext()).setIsShowPatient(false);
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -59,5 +61,10 @@ public class patient extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void stopthis()
+    {
+        this.finish();
     }
 }

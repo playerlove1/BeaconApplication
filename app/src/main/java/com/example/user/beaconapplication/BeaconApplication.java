@@ -28,9 +28,9 @@ public class BeaconApplication extends Application implements BeaconConsumer {
     private RegionBootstrap regionBootstrap;
     private BackgroundPowerSaver backgroundPowerSaver;
     private boolean haveDetectedBeaconsSinceBoot = false;
-    private Context nowCurrentForegroundActivity=null;
+    private Context CurrentForegroundActivity=null;
     private BeaconManager beaconManager;
-
+    private patient p;
 
 
     @Override
@@ -52,10 +52,12 @@ public class BeaconApplication extends Application implements BeaconConsumer {
 
     }
 
-
+    public void setp(patient p1) {
+        this.p = p1;
+    }
 
     public void setMonitoringActivity(Context context) {
-        this.nowCurrentForegroundActivity = context;
+        this.CurrentForegroundActivity = context;
     }
 
     @Override
@@ -82,11 +84,27 @@ public class BeaconApplication extends Application implements BeaconConsumer {
                                     break;
                             case 2://原來較近
                                     break;
-
                         }
                     }
-                   
-                   CheckBeaconId(nearstBeacon.getId2().toInt());
+                   Log.d("距離",Double.toString(nearstDistance));
+                   switch (checkContex())
+                   {
+                       case 0: //main 
+                           Log.d("目前context", null);
+                           break;
+
+                       case 1: //patient
+                           if(nearstDistance.intValue()>2)
+
+                               p.stopthis();
+                           break;
+                       case 2:
+                       if(nearstDistance.intValue()<1)
+
+                       CheckBeaconId(nearstBeacon.getId2().toInt());
+                           break;
+                   }
+
 
 
                }
@@ -141,5 +159,20 @@ private int compareDistance(double currentNearst,double next) {
      }
 
  }
+//確認目前在哪個activity
+    private int checkContex()
+    {
+        int result=0;
+        if( CurrentForegroundActivity  instanceof MainActivity)
+        {
+            result=2;
+        }
+        else if(CurrentForegroundActivity instanceof patient){
+
+                 result=1;
+         }
+        return result;
+    }
+//缺認距離
 
 }
